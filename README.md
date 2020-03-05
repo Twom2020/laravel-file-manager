@@ -2,7 +2,7 @@
 
 ### Installation:
 ```
-composer require Twom/laravel-file-manger
+composer require twom/laravel-file-manger
 ```
 
 You must add the service provider to `config/app.php`
