@@ -1,5 +1,5 @@
 {
-    "name": "Twom/laravel-file-manger",
+    "name": "twom/laravel-file-manger",
     "description": "Upload file and download it :)",
     "type": "library",
     "require": {
@@ -14,11 +14,11 @@
         "laravel file manager",
         "laravel"
     ],
-    "homepage": "https://github.com/Twomyan/laravel-file-manager",
+    "homepage": "https://github.com/Twom2020/laravel-file-manager",
     "authors": [
         {
-            "name": "Twomyan",
-            "email": "Twomhban1379@gmail.com"
+            "name": "AliGhaleyan",
+            "email": "alighalehban1379@gmail.com"
         }
     ],
     "autoload": {
