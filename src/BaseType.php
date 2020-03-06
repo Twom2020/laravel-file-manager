@@ -218,6 +218,7 @@ abstract class BaseType
 
         return File::query()
             ->where("name", $name)
+            ->orWhere("file_name", $name)
             ->first();
     }
 
