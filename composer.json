@@ -3,8 +3,8 @@
     "description": "Upload file and download it :)",
     "type": "library",
     "require": {
-        "php": "^7.2",
-        "laravel/framework": "^6.2",
+        "php": ">=7",
+        "laravel/framework": ">=5.8",
         "intervention/image": "^2.5"
     },
     "keywords": [
