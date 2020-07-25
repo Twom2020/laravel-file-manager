@@ -128,13 +128,17 @@ abstract class BaseType
      * @param int $length
      * @return string
      */
-    protected function generateRandomName(int $length = 15)
+    protected function generateRandomName(int $length = 20)
     {
+        $counter = 1;
         do {
-            $randomName = Str::random($length);
+            $randomName = str_replace('.', '', Str::random($length));
             $check = File::query()
                 ->where("name", $randomName)
                 ->first();
+            if ($counter > 5)
+                throw new \Exception("Too much effort to select the file name.");
+            $counter++;
         } while (!empty($check));
 
         return $randomName;
@@ -150,6 +154,7 @@ abstract class BaseType
     public function useFileNameToUpload($status = true)
     {
         $this->useFileNameToUpload = $status;
+
         return $this;
     }
 
@@ -164,9 +169,9 @@ abstract class BaseType
      */
     public function upload($file)
     {
-        $nameSplit = explode('.', $file->getClientOriginalName());
-        $fileName = $nameSplit[0];
-        $format = $nameSplit[1];
+        $fileInfo = $file->getClientOriginalName();
+        $fileName = pathinfo($fileInfo, PATHINFO_FILENAME);
+        $format = $file->getClientOriginalExtension();
         if (!$this->getName()) {
             if ($this->useFileNameToUpload) {
                 $this->setName($fileName);
@@ -198,6 +203,7 @@ abstract class BaseType
             "private"   => $this->public ? false : true,
         ]);
         $this->setFile($file);
+
         return $file;
     }
 
@@ -232,6 +238,7 @@ abstract class BaseType
     public function setFile(File $file)
     {
         $this->file = $file;
+
         return $this;
     }
 
@@ -279,6 +286,7 @@ abstract class BaseType
     public function setConfig(array $config)
     {
         $this->config = $config;
+
         return $this;
     }
 
@@ -302,6 +310,7 @@ abstract class BaseType
         if (is_null($name)) return $config;
         $find = $config[$name];
         if (!isset($find)) return false;
+
         return $find;
     }
 
@@ -316,6 +325,7 @@ abstract class BaseType
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -340,6 +350,7 @@ abstract class BaseType
     public function setPath($path)
     {
         $this->path = $path;
+
         return $this;
     }
 
@@ -403,6 +414,7 @@ abstract class BaseType
     public function dateTimePrefix($value = true)
     {
         $this->dateTimePrefix = $value;
+
         return $this;
     }
 
@@ -427,6 +439,7 @@ abstract class BaseType
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
+
         return $this;
     }
 
@@ -444,6 +457,7 @@ abstract class BaseType
             return storage_path($src);
         if ($this->storageFolder == "public")
             return public_path($src);
+
         return public_path($src);
     }
 
@@ -457,6 +471,7 @@ abstract class BaseType
     public function setName(string $name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -482,6 +497,7 @@ abstract class BaseType
     public function setFormat(string $format)
     {
         $this->format = $format;
+
         return $this;
     }
 
@@ -508,6 +524,7 @@ abstract class BaseType
     {
         $this->storageFolder = "storage";
         $this->public = false;
+
         return $this;
     }
 
@@ -523,6 +540,7 @@ abstract class BaseType
     {
         $this->storageFolder = "public";
         $this->public = true;
+
         return $this;
     }
 
