@@ -170,8 +170,9 @@ abstract class BaseType
     public function upload($file)
     {
         $fileInfo = $file->getClientOriginalName();
-        $fileName = pathinfo($fileInfo, PATHINFO_FILENAME);
-        $format = $file->getClientOriginalExtension();
+        $split = explode('.', $fileInfo);
+        $fileName = array_shift($split);
+        $format = array_pop($split);
         if (!$this->getName()) {
             if ($this->useFileNameToUpload) {
                 $this->setName($fileName);
